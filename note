@@ -1,0 +1,15 @@
+Login           ---done
+admin           ---done
+profile         ---done
+shift           ---done
+type            ---done
+woed            ---done
+room            ---done
+bed             ---done
+patient         ---done
+change bed      ---done
+medicines       ---done
+
+patient_medicines
+administrations
+logs
