@@ -30,7 +30,7 @@ class PatientController extends Controller
     {
         $Wards = Ward::get();
 
-        $rooms = DB::select('select r.id , r.name  from rooms r where r.id  Not 
+        $rooms = DB::select('select r.id , r.name  from rooms r where r.id  Not
         in(select b.room_id from beds b WHERE b.room_id = r.id And
 		 b.id IN(SELECT p.bed_id from patients p where p.bed_id = b.id AND p.discharged != NULL
 		 AND p.discharged != "0000-00-00 00:00:00"
@@ -58,7 +58,7 @@ class PatientController extends Controller
 
                 $request->request->add(['admitted' => now()]);
                 $request->request->add(['discharged' => null]);
-                
+
                 $room = Room::find($request->room);
               //  return $room ;
                 if($request->gender =="male" && $room->type_id =="free" ){
@@ -72,7 +72,9 @@ class PatientController extends Controller
 
 
              Patient::create($request->except('_token',"room"));
-
+               //start logs
+               logss("create Row in Patient");
+               //End Logs
                 DB::commit();
                 return redirect()->route('Patients.index')->with(['success' => 'تم ألاضافة بنجاح']);
         } catch (\Exception $ex) {
@@ -102,7 +104,7 @@ class PatientController extends Controller
     {
         $patient =Patient::find($id);
         return view('Admin.patients.edit', compact('patient'));
-        
+
     }
 
     /**
@@ -131,7 +133,9 @@ class PatientController extends Controller
             }
 
            $Patient->update($request->all());
-
+               //start logs
+               logss("update Row in Patient");
+               //End Logs
 
             DB::commit();
             return redirect()->route('Patients.index')->with(['success' => 'تم التعديل بنجاح']);
@@ -155,6 +159,9 @@ class PatientController extends Controller
              foreach ($Patient->ChangesBed as $ChangesBed_Patient) {
                 $ChangesBed_Patient->delete();
              }
+               //start logs
+               logss("delete Row in Patient");
+               //End Logs
         $Patient->delete();
         return redirect()->route('Patients.index')->with(['success' => 'تم الحذف بنجاح']);
     }
@@ -164,7 +171,7 @@ class PatientController extends Controller
 
 
 
-    //Start Ajax 
+    //Start Ajax
 
 
 
@@ -175,7 +182,7 @@ class PatientController extends Controller
      $gender1 =  ($request->gender == "male")?"red":"blue";
 
      if($request->gender == "male" && $request->isIsolted == 1){
-        $rooms = DB::select('select r.id , r.name  from rooms r where r.ward_id ='.request('id') . ' And r.type_id = "free" And r.id  Not 
+        $rooms = DB::select('select r.id , r.name  from rooms r where r.ward_id ='.request('id') . ' And r.type_id = "free" And r.id  Not
         in(select b.room_id from beds b WHERE b.room_id = r.id And
          b.id IN(SELECT p.bed_id from patients p where p.bed_id = b.id AND p.discharged != NULL
          AND p.discharged != "0000-00-00 00:00:00"
@@ -184,7 +191,7 @@ class PatientController extends Controller
      }
     //  $request->gender == "male" &&
      else  if( $request->isIsolted == 0 ){
-            $rooms = DB::select('select r.id , r.name  from rooms r where r.ward_id ='.request('id') . ' And r.type_id != "'. $gender1 .'" And r.id  Not 
+            $rooms = DB::select('select r.id , r.name  from rooms r where r.ward_id ='.request('id') . ' And r.type_id != "'. $gender1 .'" And r.id  Not
             in(select b.room_id from beds b WHERE b.room_id = r.id And
              b.id IN(SELECT p.bed_id from patients p where p.bed_id = b.id AND p.discharged != NULL
              AND p.discharged != "0000-00-00 00:00:00"
@@ -202,11 +209,11 @@ class PatientController extends Controller
     public function getbeds(Request $request)
     {
         // $beds = Bed::get();
-        $beds = DB::select('select b.id , b.name  from beds b where b.room_id ='.request('id') . '  And b.id  Not 
+        $beds = DB::select('select b.id , b.name  from beds b where b.room_id ='.request('id') . '  And b.id  Not
             in(SELECT p.bed_id from patients p where  p.bed_id = b.id AND ( p.discharged is NULL
             OR p.discharged = "0000-00-00 00:00:00")
            )');
-        //   p.bed_id = b.id AND 
+        //   p.bed_id = b.id AND
         $html = '<option value=""></option>';
         foreach ($beds as $bed) {
           $html .= '<option value="'.$bed->id.'">'.$bed->name.'</option>';

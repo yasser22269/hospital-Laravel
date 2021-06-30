@@ -42,7 +42,7 @@ class ChangesBedController extends Controller
                 $request->request->add(['isIsolted' => 0]);
 
                 $request->request->add(['discharged' => null]);
-                
+
                 $room = Room::find($request->room);
 
                 $room_id = Room::find($Patient->bed->room_id);
@@ -51,7 +51,7 @@ class ChangesBedController extends Controller
                     $room_id->type_id = 'free';
                     $room_id->save();
                 }
-                
+
                 if($request->gender =="male" && $room->type_id =="free" ){
                     $room->type_id = 'blue';
                     $room->save();
@@ -59,7 +59,7 @@ class ChangesBedController extends Controller
                     $room->type_id = 'red';
                     $room->save();
                 }
-                
+
 
                 $ChangesBed = new ChangesBed;
                 $ChangesBed->patient_id = $request->id;
@@ -71,6 +71,9 @@ class ChangesBedController extends Controller
 
                 $Patient->update($request->except('_token',"room","_method"));
 
+                 //start logs
+                    logss("update Row in Changes Bed");
+                    //End Logs
 
                 DB::commit();
                 return redirect()->route('Patients.index')->with(['success' => 'تم ألاضافة بنجاح']);
@@ -81,5 +84,5 @@ class ChangesBedController extends Controller
     }
 
 
-    
+
 }

@@ -23,6 +23,9 @@ class DoctorController extends Controller
 
     public function index()
     {
+        //permissions
+        typePage("manger");
+
         $doctors = Admin::Doctor()->paginate(PAGINATION_COUNT);
         return view('Admin.doctors.index', compact('doctors'));
     }
@@ -30,6 +33,9 @@ class DoctorController extends Controller
 
     public function create()
     {
+                //permissions
+                typePage("manger");
+
         // where('name','!=', null)->
         $Shifts = Shift::get();
         // return $categories ;
@@ -50,6 +56,10 @@ class DoctorController extends Controller
             // return $request->except('_token','type');
             $doctor =  Admin::create($request->except('_token'));
 
+        //start logs
+        logss("store Row in Doctor");
+        //End Logs
+
             DB::commit();
             return redirect()->route('Doctors.index')->with(['success' => ' تم ألاضافة بنجاح']);
        } catch (\Exception $ex) {
@@ -61,6 +71,9 @@ class DoctorController extends Controller
 
     public function edit($id)
     {
+                //permissions
+                typePage("manger");
+        
         $doctor = Admin::Doctor()->findOrFail($id);
         $Shifts = Shift::get();
 
@@ -83,7 +96,9 @@ class DoctorController extends Controller
             $doctor->email = $request->email;
             $doctor->shift_id = $request->shift_id;
             $doctor->save();
-
+        //start logs
+        logss("update Row in Doctor");
+        //End Logs
             DB::commit();
             return redirect()->route('Doctors.index')->with(['success' => 'تم التعديل بنجاح']);
         } catch (\Exception $ex) {
@@ -102,6 +117,9 @@ class DoctorController extends Controller
         if (!$Doctor)
         return redirect()->route('Doctors.index')->with(['error' => 'هذا الماركة غير موجود ']);
         $Doctor->delete();
+                //start logs
+                logss("delete Row in Doctor");
+                //End Logs
         return redirect()->route('Doctors.index')->with(['success' => 'تم الحذف بنجاح']);
     }
 }

@@ -30,7 +30,7 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     Route::post( 'getbeds', 'PatientController@getbeds' )->name( 'getbeds' );
 
 
-    Route::resource('ChangesBed', 'ChangesBedController')->only('edit','update');;
+    Route::resource('ChangesBed', 'ChangesBedController')->only('edit','update');
 
 
     // ------------------------------End Patients------------------------------------
@@ -40,6 +40,21 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
     Route::resource('Medicines', 'MedicineController');
 
     // ------------------------------End medicines------------------------------------
+
+    // ------------------------------Start patient_medicines---------------------------------
+
+        Route::resource('patient_medicines', 'PatientMedicineController');
+
+    // ------------------------------End patient_medicines------------------------------------
+
+
+        // ------------------------------Start administrations---------------------------------
+
+        Route::resource('administrations', 'AdministrationController')->only('index','update');;
+
+    // ------------------------------End administrations------------------------------------
+
+    Route::get('LogsPage', 'LogsController@index')->name('admin.LogsPage');
 
 
 });

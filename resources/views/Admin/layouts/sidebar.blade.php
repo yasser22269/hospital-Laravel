@@ -30,8 +30,14 @@
           <li class="nav-item  {{ Request::is('Admin/Patients*') ? 'active' : '' }}"><a href="{{ route('Patients.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Patients</span><span class="badge badge badge-info float-right"> {{ App\Models\Patient::count() }} </span></a>
           </li>
 
-          @endif
 
+          <li class=" navigation-header">
+            <span data-i18n="nav.Logs.pages">Logs</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+          </li>
+          <li class="nav-item  {{ Request::is('Admin/LogsPage*') ? 'active' : '' }}"><a href="{{ route('admin.LogsPage') }}"><i class="la la-check-square"></i><span class="menu-title" >Logs</span></a>
+          </li>
+{{-- {{ App\Models\Log::count() }} --}}
+          @endif
 
 
 
@@ -43,91 +49,33 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-          {{--
-    <li class="nav-item  {{ Request::is('Admin/DoctorSchedule*') ? 'active' : '' }}"><a href="{{ route('DoctorSchedule.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Schedule(مواعيد الاطباء)</span><span class="badge badge badge-info float-right"> {{ App\Models\DoctorSchedule::count() }} </span></a>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/reservation*') ? 'active' : '' }}"><a href="{{ route('reservation.index') }}"><i class="la la-check-square"></i><span class="menu-title" >reservation(حجوزات)</span><span class="badge badge badge-info float-right"> {{ App\Models\Appointment::count() }} </span></a>
-          </li>
-
           <li class=" navigation-header">
-            <span data-i18n="nav.category.pages">categories</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+            <span data-i18n="nav.administrations.pages">Administrations</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
           </li>
-          <li class="nav-item  {{ Request::is('Admin/Category*') ? 'active' : '' }}"><a href="{{ route('Category.index') }}"><i class="la la-check-square"></i><span class="menu-title" >categories</span><span class="badge badge badge-info float-right"> {{ App\Models\category::count() }} </span></a>
+          <li class="nav-item  {{ Request::is('Admin/administrations*') ? 'active' : '' }}"><a href="{{ route('administrations.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Administrations</span><span class="badge badge badge-info float-right"> {{ App\Models\PatientMedicine::Active()->DoseAmountNull()->count() }} </span></a>
           </li>
 
 
 
+          @if (auth('admin')->user()->type_id == 'doctor')
           <li class=" navigation-header">
-            <span data-i18n="nav.category.pages">Tags</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+            <span data-i18n="nav.PatientMedicine.pages">PatientMedicine</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
           </li>
-          <li class="nav-item {{ Request::is('Admin/Tag*') ? 'active' : '' }}"><a href="{{ route('Tag.index') }}"><i class="la la-tags"></i><span class="menu-title" >Tags</span><span class="badge badge badge-info float-right"> {{ App\Models\Tag::count() }} </span></a>
-          </li>  --}}
-
-          {{-- <li class=" navigation-header">
-            <span data-i18n="nav.category.pages">Products</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+          <li class="nav-item  {{ Request::is('Admin/patient_medicines*') ? 'active' : '' }}"><a href="{{ route('patient_medicines.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Patient Medicines</span><span class="badge badge badge-info float-right"> {{ App\Models\PatientMedicine::count() }} </span></a>
           </li>
-          <li class="nav-item  {{ Request::is('Admin/Products*') ? 'active' : '' }}"><a href="{{ route('Products.index') }}"><i class="la la-edit"></i><span class="menu-title" >Products</span><span class="badge badge badge-info float-right"> {{ App\Models\Product::count() }} </span></a>
-          </li> --}}
 
 
-          {{-- <li class=" navigation-header">
-            <span data-i18n="nav.category.pages">Attributes</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/Attributes*') ? 'active' : '' }}"><a href="{{ route('Attributes.index') }}"><i class="la la-edit"></i><span class="menu-title" >Attributes</span><span class="badge badge badge-info float-right"> {{ App\Models\Attribute::count() }} </span></a>
-          </li> --}}
+          @endif
 
 
-          {{-- <li class=" navigation-header">
-            <span data-i18n="nav.category.pages">Option</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/Options*') ? 'active' : '' }}"><a href="{{ route('Options.index') }}"><i class="la la-edit"></i><span class="menu-title" >Options</span><span class="badge badge badge-info float-right"> {{ App\Models\Option::count() }} </span></a>
-          </li> --}}
-{{--
-          <li class=" navigation-header">
-            <span data-i18n="nav.contactus.pages">CONTACT</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/Contact*') ? 'active' : '' }}"><a href="{{ route('Contact.index') }}"><i class="la la-edit"></i><span class="menu-title" >Contacts</span><span class="badge badge badge-info float-right"> {{ App\Models\ContactUS::count() }} </span></a>
-          </li>  --}}
+
+
 
 
 
 
 
 </li>
-        {{-- <li class=" navigation-header">
-            <span data-i18n="nav.coupons.pages">coupons</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/coupon*') ? 'active' : '' }}"><a href="{{ route('coupon.index') }}"><i class="la la-edit"></i><span class="menu-title" >coupons</span><span class="badge badge badge-info float-right"> {{ App\Models\coupon::count() }} </span></a>
-         </li> --}}
 
         <li class=" navigation-header"> </li>
         <li class=" navigation-header"> </li>

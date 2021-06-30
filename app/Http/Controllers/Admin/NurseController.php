@@ -24,6 +24,9 @@ class NurseController extends Controller
 
     public function index()
     {
+                //permissions
+                typePage("manger");
+        
         $nurses = Admin::Nurse()->paginate(PAGINATION_COUNT);
         return view('Admin.nurses.index', compact('nurses'));
     }
@@ -31,6 +34,9 @@ class NurseController extends Controller
 
     public function create()
     {
+                //permissions
+                typePage("manger");
+
         // where('name','!=', null)->
         $Shifts = Shift::get();
         // return $categories ;
@@ -50,7 +56,9 @@ class NurseController extends Controller
 
             // return $request->except('_token','type');
             $nurse =  Admin::create($request->except('_token'));
-
+               //start logs
+               logss("create Row in Nurse");
+               //End Logs
             DB::commit();
             return redirect()->route('Nurses.index')->with(['success' => ' تم ألاضافة بنجاح']);
        } catch (\Exception $ex) {
@@ -62,6 +70,9 @@ class NurseController extends Controller
 
     public function edit($id)
     {
+                //permissions
+                typePage("manger");
+
         $nurse = Admin::nurse()->findOrFail($id);
         $Shifts = Shift::get();
 
@@ -84,7 +95,9 @@ class NurseController extends Controller
             $nurse->email = $request->email;
             $nurse->shift_id = $request->shift_id;
             $nurse->save();
-
+               //start logs
+               logss("updae Row in Nurse");
+               //End Logs
             DB::commit();
             return redirect()->route('Nurses.index')->with(['success' => 'تم التعديل بنجاح']);
         } catch (\Exception $ex) {
@@ -99,6 +112,9 @@ class NurseController extends Controller
         if (!$nurse)
         return redirect()->route('Nurses.index')->with(['error' => 'هذا الماركة غير موجود ']);
         $nurse->delete();
+               //start logs
+               logss("delete Row in Nurse");
+               //End Logs
         return redirect()->route('Nurses.index')->with(['success' => 'تم الحذف بنجاح']);
     }
 }

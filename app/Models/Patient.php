@@ -26,7 +26,7 @@ class Patient extends Model
         return  $this -> isIsolted  == 0 ?  'غير محجوز'   : 'محجوز' ;
      }
 
-     
+
     public  function scopeIsolted($query){
         return $query->whereNull('isIsolted');
     }
@@ -34,5 +34,8 @@ class Patient extends Model
     public  function scopeDischarged($query){
         return $query->whereNotNull('discharged');
     }
-    
+    public  function scopeDischargedNull($query){
+        return $query->whereNull('discharged');
+    }
+
 }

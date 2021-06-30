@@ -67,21 +67,32 @@
           </div>
         </div>
       </div>
-    
+
 
 
     </div>
-    <!--/ eCommerce statistic -->
-    <!-- Products sell and New Orders -->
 
 
 
 
-
+    <?php $currentTime = getdate();   ?>
+    <h1 class="clock"></h1>
 
 @endsection
 
 
 @section('js')
-
+<script>
+    var date = new Date(Date.UTC(<?php echo $currentTime['year'] .",".
+                                        $currentTime['mon'] .",".
+                                        $currentTime['mday'] .",".
+                                        $currentTime['hours'] .",".
+                                        $currentTime['minutes'] .",".
+                                        $currentTime['seconds']; ?>));
+    setInterval(function() {
+        date.setSeconds(date.getSeconds() + 1);
+        $('.clock').html((date.getHours() +':' + date.getMinutes() + ':' + date.getSeconds() ));
+        {{-- console.log((date.getHours() +':' + date.getMinutes() + ':' + date.getSeconds() )); --}}
+    }, 1000);
+</script>
 @endsection

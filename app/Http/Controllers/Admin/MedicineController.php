@@ -46,6 +46,8 @@ class MedicineController extends Controller
 
             Medicine::create($request->except('_token'));
 
+            logss("Add Row in Medicine");
+
                 DB::commit();
                 return redirect()->route('Medicines.index')->with(['success' => 'تم ألاضافة بنجاح']);
         } catch (\Exception $ex) {
@@ -72,7 +74,7 @@ class MedicineController extends Controller
 
 
            $Patient->update($request->all());
-
+           logss("Edit Row in Medicine");
             DB::commit();
             return redirect()->route('Medicines.index')->with(['success' => 'تم التعديل بنجاح']);
         } catch (\Exception $ex) {
@@ -86,7 +88,7 @@ class MedicineController extends Controller
         $Medicine = Medicine::find($id);
         if (!$Medicine)
             return redirect()->route('Medicines.index')->with(['error' => 'هذا الماركة غير موجود ']);
-
+            logss("delete Row in Medicine");
         $Medicine->delete();
         return redirect()->route('Medicines.index')->with(['success' => 'تم الحذف بنجاح']);
     }

@@ -13,27 +13,5 @@ use Illuminate\Support\Facades\File;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        $Users = User::paginate(PAGINATION_COUNT);
-        // translatedIn(app() -> getLocale())->
-        // return Request::has('brands');
-        return view('Admin.users.index', compact('Users'));
-    }
-
-
-    public function destroy($id)
-    {
-        $Brand = User::find($id);
-        if (!$Brand)
-            return redirect()->route('Users.index')->with(['error' => 'هذا العضو غير موجود ']);
-
-        $Brand->delete();
-        return redirect()->route('Users.index')->with(['success' => 'تم الحذف بنجاح']);
-    }
+  
 }

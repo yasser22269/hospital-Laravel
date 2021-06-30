@@ -15,13 +15,10 @@ class CreateLogsTable extends Migration
     {
         Schema::create('logs', function (Blueprint $table) {
             $table->Increments('id');
-
-            $table->dateTime('startSessionDate')->nullable();
-            $table->dateTime('endSessionDate')->nullable();
-
-            $table->integer('shift_id')->unsigned()->nullable();
-            $table->foreign('shift_id')->references('id')
-            ->on('shifts')->onUpdate('cascade')->onDelete('set null');
+            $table->string('title')->nullable();
+            $table->integer('user_id')->unsigned()->nullable();
+            $table->foreign('user_id')->references('id')
+            ->on('admins')->onUpdate('cascade')->onDelete('set null');
             $table->timestamps();
         });
     }
