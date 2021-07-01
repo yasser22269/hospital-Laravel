@@ -3,7 +3,8 @@
 @section('title','home')
 
 @section('style')
-  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.css' />
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.css" />
+
 @endsection
 
 @section('content')
@@ -77,6 +78,10 @@
 
     <?php $currentTime = getdate();   ?>
     <h1 class="clock"></h1>
+    <div class="response"></div>
+    <div id='calendar' class="fc fc-unthemed fc-ltr"></div>
+
+
 
 @endsection
 
@@ -95,4 +100,45 @@
         {{-- console.log((date.getHours() +':' + date.getMinutes() + ':' + date.getSeconds() )); --}}
     }, 1000);
 </script>
+
+
+
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/moment.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
+
+{{--  <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.1.0/fullcalendar.min.js'></script>  --}}
+
+<script type="text/javascript">
+    $(document).ready(function() {
+        events={!! json_encode($events) !!};
+         $('#calendar').fullCalendar({
+             header: {
+                 left: 'prev,next today',
+                 center: 'title',
+                 right: 'month,basicWeek,basicDay'
+             },
+
+             defaultDate: "{{ today()}}",
+             navLinks: true, // can click day/week names to navigate views
+             editable: true,
+             eventLimit: true, // allow "more" link when too many events
+             events: events,
+         dayClick: function(date, allDay, jsEvent, view) {
+             var eventsCount = 0;
+             var date = date.format('YYYY-MM-DD');
+             $('#calendar').fullCalendar('clientEvents', function(event) {
+                 var start = moment(event.start).format("YYYY-MM-DD");
+                 var end = moment(event.end).format("YYYY-MM-DD");
+                 if(date == start)
+                 {
+                     eventsCount++;
+                 }
+             });
+             alert(eventsCount);
+         }
+     });
+ });
+ </script>
 @endsection

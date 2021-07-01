@@ -7,6 +7,7 @@ use  App\Http\Controllers\Controller;
 use App\Http\Requests\AdminProfileRequest;
 use App\Models\Admin;
 use App\Models\Patient;
+use App\Models\Surgery;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
@@ -20,10 +21,23 @@ class HomeController extends Controller
          $patientCount = Patient::count();
         // $ContactUSCount = ContactUS::count();
         // $DoctorCount = Doctor::count();
-        
-       
-        
-        return view('Admin.index',compact('Nursecount','Doctorcount','patientCount'));
+        $Surgeries = Surgery::get();
+
+        //return  $DoctorSchedules ;
+        foreach ($Surgeries as $Surgery) {
+
+            $events[] = [
+                'title' => $Surgery->patient->name . " To Docotr: " .$Surgery->doctor->name   ,
+                'start' => $Surgery->startTime,
+                'end' => $Surgery->endTime,
+                'url'   => route('Surgeries.show', $Surgery->id),
+                // "color"=> 'red',
+                // "textColor"=> 'white',
+
+            ];
+        }
+       // return today();
+        return view('Admin.index',compact('Nursecount','Doctorcount','patientCount',"events"));
     }
 
 

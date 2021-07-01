@@ -24,9 +24,8 @@ class SurgeryRequest extends FormRequest
     public function rules()
     {
         return [
-            "scheduleDate" => 'required|date',
-            "startTime" => 'required',
-            "endTime" => 'required',
+            "startTime" => 'required|date',
+            "endTime" => 'required|date',
             'doctor_id' => 'numeric|exists:admins,id',
             'patient_id' => 'numeric|exists:patients,id',
         ];

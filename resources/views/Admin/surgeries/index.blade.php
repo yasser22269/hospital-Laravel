@@ -1,5 +1,13 @@
 @extends('layouts.admin')
 @section('title','surgeries index')
+@section('style')
+<style>
+    .table th, .table td {
+        padding: 0.75rem 1rem;
+    }
+</style>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
+@endsection
 @section('content')
 <div class="content-header row">
     <div class="content-header-left col-md-6 col-12 mb-2">
@@ -33,13 +41,12 @@
 
         <div class="card-content collapse show">
           <div class="table-responsive">
-            <table class="table">
+            <table id="datatable" class="table">
               <thead class="bg-success white">
                 <tr>
                     <th> id</th>
                     <th>Doctor Name</th>
                     <th>Patient Name</th>
-                    <th>Date</th>
                     <th>start Time</th>
                     <th>End Time</th>
                     <th>Edit</th>
@@ -54,9 +61,7 @@
                     <td>{{ ($index++)+1 }}</td>
                     <td>{{ $surgery->doctor->name }}</td>
                     <td>{{ $surgery->patient->name }}</td>
-                    <td>
-                        {{  $surgery->scheduleDate}}
-                      </td>
+
                     <td>{{ $surgery->startTime  }}</td>
                     <td>{{ $surgery->endTime  }}</td>
                   <td>
@@ -89,3 +94,12 @@
 @endsection
 
 
+@section('js')
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+
+    </script>
+@endsection

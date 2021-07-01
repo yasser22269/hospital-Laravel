@@ -1,18 +1,18 @@
-Login                                   ---done
-admin                                   ---done
-profile                                 ---done
-shift                                   ---done
-type                                    ---done
-woed                                    ---done
-room                                    ---done
-bed                                     ---done
-patient                                 ---done
-change bed                              ---done
-medicines                               ---done
-patient_medicines                       ---done
-administrations                         ---done
-logs                                    ---done
-permissions                             ---done
-Surgeries(العمليات الجراحية)           ---done
+- Login                                   ---done
+- admin                                   ---done
+- profile                                 ---done
+- shift                                   ---done
+- type                                    ---done
+- woed                                    ---done
+- room                                    ---done
+- bed                                     ---done
+- patient                                 ---done
+- change bed                              ---done
+- medicines                               ---done
+- patient_medicines                       ---done
+- administrations                         ---done
+- logs                                    ---done
+- permissions                             ---done
+- Surgeries(العمليات الجراحية)           ---done
 
 

@@ -16,7 +16,7 @@ class SurgeryController extends Controller
                  //permissions
                  typePage("doctor");
 
-        $surgeries = Surgery::orderBy('id', 'desc')->paginate(PAGINATION_COUNT);
+        $surgeries = Surgery::paginate(PAGINATION_COUNT);
         return view('Admin.surgeries.index', compact('surgeries'));
     }
 
@@ -100,13 +100,12 @@ class SurgeryController extends Controller
            return redirect()->route('Surgeries.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
        }
     }
+    public function show($id)
+    {
+    $Surgery = Surgery::find($id);
+    return view('Admin.surgeries.show', compact("Surgery"));
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Category  $category
-     * @return \Illuminate\Http\Response
-     */
+    }
     public function destroy($id)
     {
 

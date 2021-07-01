@@ -21,10 +21,9 @@ class CreateSurgeriesTable extends Migration
             $table->integer('patient_id')->unsigned()->nullable();
             $table->foreign('patient_id')->references('id')
                 ->on('patients')->onUpdate('cascade')->onDelete('set null');
-                
-            $table->date('scheduleDate');
-            $table->time('startTime');
-            $table->time('endTime');
+
+            $table->DateTime('startTime');
+            $table->DateTime('endTime');
             $table->timestamps();
         });
     }

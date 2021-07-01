@@ -40,15 +40,7 @@
                   <input type="hidden" name="doctor_id" value="{{ auth()->user()->id }}">
 
                   <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label for="projectinput1">schedule Date</label>
-                        <input type="date" id="projectinput1" class="form-control" placeholder="scheduleDate" name="scheduleDate" value="{{ $Surgery->scheduleDate }}">
-                        @error('scheduleDate')
-                        <span class="text-danger"> {{$message}}</span>
-                        @enderror
-                      </div>
-                    </div>
+
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="projectinput2">Patient Name</label>
@@ -74,7 +66,7 @@
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="projectinput1">start Time Date</label>
-                          <input type="time" id="projectinput1" class="form-control" placeholder="startTime" name="startTime" value="{{ $Surgery->startTime }}">
+                          <input type="datetime" id="projectinput1" class="form-control" placeholder="startTime" name="startTime" value="{{ $Surgery->startTime }}">
                           @error('startTime')
                           <span class="text-danger"> {{$message}}</span>
                           @enderror
@@ -83,7 +75,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label for="projectinput1">End Time Date</label>
-                          <input type="time" id="projectinput1" class="form-control" placeholder="EndTime" name="endTime" value="{{ $Surgery->endTime }}">
+                          <input type="datetime" id="projectinput1" class="form-control" placeholder="EndTime" name="endTime" value="{{ $Surgery->endTime }}">
                           @error('endTime')
                           <span class="text-danger"> {{$message}}</span>
                           @enderror
