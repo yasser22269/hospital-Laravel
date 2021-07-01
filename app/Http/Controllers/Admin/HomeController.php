@@ -21,21 +21,21 @@ class HomeController extends Controller
          $patientCount = Patient::count();
         // $ContactUSCount = ContactUS::count();
         // $DoctorCount = Doctor::count();
-        $Surgeries = Surgery::get();
-
+        $Surgeries = Surgery::with('patient','doctorName')->get();
+     //   return  $Surgeries ;
         //return  $DoctorSchedules ;
-        foreach ($Surgeries as $Surgery) {
+       foreach ($Surgeries as $Surgery) {
 
-            $events[] = [
-                'title' => $Surgery->patient->name . " To Docotr: " .$Surgery->doctor->name   ,
-                'start' => $Surgery->startTime,
-                'end' => $Surgery->endTime,
-                'url'   => route('Surgeries.show', $Surgery->id),
-                // "color"=> 'red',
-                // "textColor"=> 'white',
+        $events[] = [
+            'title' => $Surgery->patient->name . " To Docotr: " .$Surgery->doctorName->name   ,
+            'start' => $Surgery->startTime,
+            'end' => $Surgery->endTime,
+            'url'   => route('Surgeries.show', $Surgery->id),
+            // "color"=> 'red',
+            // "textColor"=> 'white',
 
-            ];
-        }
+        ];
+    }
        // return today();
         return view('Admin.index',compact('Nursecount','Doctorcount','patientCount',"events"));
     }

@@ -8,7 +8,7 @@ class Surgery extends Model
 {
     protected $guarded = [];
     protected $dates = ['startTime', 'endTime'];
-    public function doctor()
+    public function doctorName()
     {
         return $this->belongsTo(Admin::class,'doctor_id');
     }

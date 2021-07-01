@@ -59,7 +59,7 @@
 
                   <tr>
                     <td>{{ ($index++)+1 }}</td>
-                    <td>{{ $surgery->doctor->name }}</td>
+                    <td>{{ $surgery->doctorName->name }}</td>
                     <td>{{ $surgery->patient->name }}</td>
 
                     <td>{{ $surgery->startTime  }}</td>

@@ -48,25 +48,13 @@
                   <input type="hidden"  name="id" value="{{ $PatientMedicine->id }}">
                   <input type="hidden"  name="doctor_id" value="{{ $PatientMedicine->doctor_id }}">
                   <input type="hidden"  name="patient_id" value="{{ $PatientMedicine->patient_id }}">
+                  <input type="hidden"  name="medicine_id" value="{{ $PatientMedicine->medicine_id }}">
                   <h2>patient: {{ $PatientMedicine->patient->name }}</h2>
-
+                    <h2>
+                        Medicine : {{ $PatientMedicine->medicine->name }}
+                    </h2>
                   <div class="row">
-                      <div class="col-md-6">
-                        <div class="form-group">
-                            <label for="projectinput1">patient
-                            </label>
-                                   <select  class="form-control" name="medicine_id" >
-                                       @foreach ($Medicines as $Medicine)
-                                        <option value="{{ $Medicine->id }}"   {{ ($PatientMedicine->medicine_id == $Medicine->id) ? "selected" : ''}}>{{ $Medicine->name }}</option>
-                                        @endforeach
 
-                                </select>
-
-                            @error("patient_id")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
 
                     <div class="col-md-6">
                         <div class="form-group">

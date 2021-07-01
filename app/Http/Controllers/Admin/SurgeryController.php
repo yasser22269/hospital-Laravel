@@ -16,7 +16,7 @@ class SurgeryController extends Controller
                  //permissions
                  typePage("doctor");
 
-        $surgeries = Surgery::paginate(PAGINATION_COUNT);
+        $surgeries = Surgery::with('doctorName')->paginate(PAGINATION_COUNT);
         return view('Admin.surgeries.index', compact('surgeries'));
     }
 
@@ -44,7 +44,7 @@ class SurgeryController extends Controller
     public function store(SurgeryRequest $request)
     {
         //return $request;
-      try {
+      //try {
             DB::beginTransaction();
 
             //return $request->medicine_id ;
@@ -57,8 +57,17 @@ class SurgeryController extends Controller
         if(($request->startTime >= $doctor_Surgery->startTime) && ($request->startTime <= $doctor_Surgery->endTime ) || ($request->endTime >= $doctor_Surgery->startTime) && ($request->endTime <= $doctor_Surgery->endTime ))
                 return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون الدكتور فى موعد فى هذا المعاد']);
         }
-
         // End chack if doctor in Surgery
+
+        // Start chack if patient in Surgery
+        $patient_Surgeries = Surgery::where('patient_id',$request->patient_id)->get();
+            $request->startTime = date('Y-m-d H:i:s', strtotime( $request->startTime));
+            $request->endTime = date('Y-m-d H:i:s', strtotime( $request->endTime));
+            foreach ($patient_Surgeries as $patient_Surgery) {
+        if(($request->startTime >= $patient_Surgery->startTime) && ($request->startTime <= $patient_Surgery->endTime ) || ($request->endTime >= $patient_Surgery->startTime) && ($request->endTime <= $patient_Surgery->endTime ))
+                return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون المريض فى موعد فى هذا المعاد']);
+        }
+        // End chack if patient in Surgery
 
 
             Surgery::create($request->except('_token'));
@@ -67,10 +76,10 @@ class SurgeryController extends Controller
         //End Logs
             DB::commit();
             return redirect()->route('Surgeries.index')->with(['success' => 'تم ألاضافة بنجاح']);
-       } catch (\Exception $ex) {
-           DB::rollback();
-           return redirect()->route('Surgeries.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-       }
+    //    } catch (\Exception $ex) {
+    //        DB::rollback();
+    //        return redirect()->route('Surgeries.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+    //    }
     }
 
     /**
@@ -113,7 +122,16 @@ class SurgeryController extends Controller
                 return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون الدكتور فى موعد فى هذا المعاد']);
         }
         // End chack if doctor in Surgery
-        
+
+        // Start chack if patient in Surgery
+        $patient_Surgeries = Surgery::where('patient_id',$request->patient_id)->get();
+            $request->startTime = date('Y-m-d H:i:s', strtotime( $request->startTime));
+            $request->endTime = date('Y-m-d H:i:s', strtotime( $request->endTime));
+            foreach ($patient_Surgeries as $patient_Surgery) {
+        if((($request->startTime >= $patient_Surgery->startTime) && ($request->startTime <= $patient_Surgery->endTime ) || ($request->endTime >= $patient_Surgery->startTime) && ($request->endTime <= $patient_Surgery->endTime ))  && $DoctorSchedule->id != $patient_Surgeries->id)
+                return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون المريض فى موعد فى هذا المعاد']);
+        }
+        // End chack if patient in Surgery
 
 
 
