@@ -24,12 +24,12 @@ class PatientsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required',
+            'name' => 'required|unique:patients,name,'.$this->id,
             'gender' => 'required',
             'isIsolted' => 'in:0,1',
             'bed_id' => 'required',
         ];
     }
 
-  
+
 }

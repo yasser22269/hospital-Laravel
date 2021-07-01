@@ -47,16 +47,17 @@
                   <h4 class="form-section">General patient_medicines Info</h4>
                   <input type="hidden"  name="id" value="{{ $PatientMedicine->id }}">
                   <input type="hidden"  name="doctor_id" value="{{ $PatientMedicine->doctor_id }}">
-                  <input type="hidden"  name="medicine_id" value="{{ $PatientMedicine->medicine_id }}">
-                  <input type="hidden" name="doseAmount" value="{{  $PatientMedicine->doseAmount }}" >
+                  <input type="hidden"  name="patient_id" value="{{ $PatientMedicine->patient_id }}">
+                  <h2>patient: {{ $PatientMedicine->patient->name }}</h2>
+
                   <div class="row">
                       <div class="col-md-6">
                         <div class="form-group">
                             <label for="projectinput1">patient
                             </label>
-                                   <select  class="form-control" name="patient_id" >
-                                       @foreach ($Patients as $Patient)
-                                        <option value="{{ $Patient->id }}"   {{ ($PatientMedicine->patient_id == $Patient->id) ? "selected" : ''}}>{{ $Patient->name }}</option>
+                                   <select  class="form-control" name="medicine_id" >
+                                       @foreach ($Medicines as $Medicine)
+                                        <option value="{{ $Medicine->id }}"   {{ ($PatientMedicine->medicine_id == $Medicine->id) ? "selected" : ''}}>{{ $Medicine->name }}</option>
                                         @endforeach
 
                                 </select>
@@ -66,18 +67,7 @@
                             @enderror
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form-group">
-                            <h3 for="projectinput1">Medicine Name
-                                :  {{  $PatientMedicine->medicine->name }}
-                            </h3>
 
-
-                            @error("medicine_id")
-                            <span class="text-danger">{{$message}}</span>
-                            @enderror
-                        </div>
-                    </div>
                     <div class="col-md-6">
                         <div class="form-group">
                           <label for="projectinput2">hourTime:</label>
@@ -89,13 +79,22 @@
                       </div>
                       <div class="col-md-6">
                         <div class="form-group">
+                          <label for="projectinput2">doseAmount:</label>
+                          <input type="number" id="projectinput2" class="form-control" placeholder="doseAmount" name="doseAmount" value="{{  $PatientMedicine->doseAmount }}" >
+                        </div>
+                          @error("doseAmount")
+                          <span class="text-danger"> {{$message}}</span>
+                          @enderror
+                      </div>
+                      {{-- <div class="col-md-6">
+                        <div class="form-group">
                           <h3 for="projectinput2">doseAmount:  {{  $PatientMedicine->doseAmount }}</h3>
 
                         </div>
                           @error("doseAmount")
                           <span class="text-danger"> {{$message}}</span>
                           @enderror
-                      </div>
+                      </div> --}}
 
                       <div class="col-md-12">
                         <div class="form-group">

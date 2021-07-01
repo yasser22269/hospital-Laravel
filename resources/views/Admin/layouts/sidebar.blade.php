@@ -37,15 +37,17 @@
           <li class="nav-item  {{ Request::is('Admin/LogsPage*') ? 'active' : '' }}"><a href="{{ route('admin.LogsPage') }}"><i class="la la-check-square"></i><span class="menu-title" >Logs</span></a>
           </li>
 {{-- {{ App\Models\Log::count() }} --}}
+
+
+<li class=" navigation-header">
+    <span data-i18n="nav.Medicines.pages">Medicines</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+  </li>
+  <li class="nav-item  {{ Request::is('Admin/Medicines*') ? 'active' : '' }}"><a href="{{ route('Medicines.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Medicines</span><span class="badge badge badge-info float-right"> {{ App\Models\Medicine::count() }} </span></a>
+  </li>
+
           @endif
 
 
-
-          <li class=" navigation-header">
-            <span data-i18n="nav.Medicines.pages">Medicines</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
-          </li>
-          <li class="nav-item  {{ Request::is('Admin/Medicines*') ? 'active' : '' }}"><a href="{{ route('Medicines.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Medicines</span><span class="badge badge badge-info float-right"> {{ App\Models\Medicine::count() }} </span></a>
-          </li>
 
 
 

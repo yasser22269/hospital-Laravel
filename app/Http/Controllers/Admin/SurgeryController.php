@@ -44,11 +44,26 @@ class SurgeryController extends Controller
     public function store(SurgeryRequest $request)
     {
         //return $request;
-       try {
+      try {
             DB::beginTransaction();
+
+            //return $request->medicine_id ;
+
+        // Start chack if doctor in Surgery
+        $doctor_Surgeries = Surgery::where('doctor_id',$request->doctor_id)->get();
+            $request->startTime = date('Y-m-d H:i:s', strtotime( $request->startTime));
+            $request->endTime = date('Y-m-d H:i:s', strtotime( $request->endTime));
+            foreach ($doctor_Surgeries as $doctor_Surgery) {
+        if(($request->startTime >= $doctor_Surgery->startTime) && ($request->startTime <= $doctor_Surgery->endTime ) || ($request->endTime >= $doctor_Surgery->startTime) && ($request->endTime <= $doctor_Surgery->endTime ))
+                return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون الدكتور فى موعد فى هذا المعاد']);
+        }
+
+        // End chack if doctor in Surgery
+
+
             Surgery::create($request->except('_token'));
         //start logs
-        logss("insert Row in  Surgery");
+             logss("insert Row in  Surgery");
         //End Logs
             DB::commit();
             return redirect()->route('Surgeries.index')->with(['success' => 'تم ألاضافة بنجاح']);
@@ -88,6 +103,20 @@ class SurgeryController extends Controller
        try {
             DB::beginTransaction();
             $DoctorSchedule = Surgery::find($id);
+
+        // Start chack if doctor in Surgery
+        $doctor_Surgeries = Surgery::where('doctor_id',$request->doctor_id)->get();
+        $request->startTime = date('Y-m-d H:i:s', strtotime( $request->startTime));
+        $request->endTime = date('Y-m-d H:i:s', strtotime( $request->endTime));
+        foreach ($doctor_Surgeries as $doctor_Surgery) {
+        if((($request->startTime >= $doctor_Surgery->startTime) && ($request->startTime <= $doctor_Surgery->endTime ) || ($request->endTime >= $doctor_Surgery->startTime) && ($request->endTime <= $doctor_Surgery->endTime )) && $DoctorSchedule->id != $doctor_Surgery->id)
+                return redirect()->route('Surgeries.index')->with(['error' =>  'سوف يكون الدكتور فى موعد فى هذا المعاد']);
+        }
+        // End chack if doctor in Surgery
+        
+
+
+
              $DoctorSchedule->update($request->all());
 
             //start logs

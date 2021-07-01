@@ -55,15 +55,12 @@ class PatientMedicineController extends Controller
             DB::beginTransaction();
                 $MedicineAmount = Medicine::find($request->medicine_id);
                // return $MedicineAmount;
-                if($request->doseAmount <= $MedicineAmount->Amount){
-                    $MedicineAmount->Amount -= $request->doseAmount ;
-                    $MedicineAmount->save();
-                }else{
-                    DB::rollback();
-                    return redirect()->back()->with(['error' => 'الكميه ليست كافيه فى المخزن']);
-                }
-
                 $request->request->add(['active' => 1]);
+                $PatientMs = PatientMedicine::where('patient_id',$request->patient_id)->get();
+               foreach ($PatientMs as  $PatientM) {
+                   if($request->medicine_id == $PatientM->medicine_id)
+                   return redirect()->route('patient_medicines.index')->with(['error' =>  'هذا العلاج موجود للمريض من قبل']);
+               }
 
                 PatientMedicine::create($request->except('_token'));
                //start logs
@@ -82,11 +79,11 @@ class PatientMedicineController extends Controller
     {
         //permissions
         typePage("doctor");
-        
+
         $PatientMedicine =PatientMedicine::find($id);
         $Medicines = Medicine::get();
-        $Patients = Patient::DischargedNull()->get();
-        return view('Admin.patient_medicines.edit', compact('PatientMedicine',"Medicines","Patients"));
+       // $Patients = Patient::DischargedNull()->get();
+        return view('Admin.patient_medicines.edit', compact('PatientMedicine',"Medicines"));
     }
 
     public function update(PatientMedicineRequest $request,$id)
@@ -100,6 +97,14 @@ class PatientMedicineController extends Controller
                 $request->request->add(['active' =>0 ]);
             }else
                  $request->request->add(['active' =>1 ]);
+
+        $PatientMs = PatientMedicine::where('patient_id',$request->patient_id)->get();
+        //return $request->medicine_id ;
+        foreach ($PatientMs as $PatientM) {
+            if($request->medicine_id == $PatientM->medicine_id && $request->medicine_id != $PatientMedicine->medicine_id)
+            return redirect()->route('patient_medicines.index')->with(['error' =>  'هذا العلاج موجود للمريض من قبل']);
+        }
+
 
            $PatientMedicine->update($request->all());
             //start logs
@@ -120,9 +125,6 @@ class PatientMedicineController extends Controller
         if (!$PatientMedicine)
             return redirect()->route('patient_medicines.index')->with(['error' => 'هذا الماركة غير موجود ']);
 
-            $MedicineAmount = Medicine::find($PatientMedicine->medicine_id);
-                 $MedicineAmount->Amount += $PatientMedicine->doseAmount ;
-                 $MedicineAmount->save();
             //start logs
             logss("delete Row in  PatientMedicine");
             //End Logs

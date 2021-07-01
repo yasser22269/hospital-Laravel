@@ -24,13 +24,15 @@ class LoginController extends Controller
         $remember_token = $request->has('remember_token') ? true : false;
 
         if (auth()->guard('admin')->attempt(['email' => $request->input("email"), 'password' => $request->input("Password") , 'type_id' => $request->input("type_id")], $remember_token)) {
-            if(auth('admin')->user()->shift->start_time >  date('H:i:s') && auth('admin')->user()->shift->end_time >  date('H:i:s')){    
+                                        // 00:00:00            14:00:00
+            if(!(auth('admin')->user()->shift->start_time <  date('H:i:s') && auth('admin')->user()->shift->end_time >  date('H:i:s'))){
+                                // 23:59:59
                  $gaurd = $this->getGaurd();
                  $gaurd->logout();
-                 
+
                  return redirect()->route('admin.login')->with(['error' =>  'ليس معادك الان للدخول']);
             }
-        
+
             return redirect()->route('Admin');
         }
         return redirect()->back()->with(['error' => 'هناك خطا بالبيانات']);

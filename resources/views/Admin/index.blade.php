@@ -88,12 +88,12 @@
 
 @section('js')
 <script>
-    var date = new Date(Date.UTC(<?php echo $currentTime['year'] .",".
+    var date = new Date(<?php echo $currentTime['year'] .",".
                                         $currentTime['mon'] .",".
                                         $currentTime['mday'] .",".
                                         $currentTime['hours'] .",".
                                         $currentTime['minutes'] .",".
-                                        $currentTime['seconds']; ?>));
+                                        $currentTime['seconds']; ?>);
     setInterval(function() {
         date.setSeconds(date.getSeconds() + 1);
         $('.clock').html((date.getHours() +':' + date.getMinutes() + ':' + date.getSeconds() ));

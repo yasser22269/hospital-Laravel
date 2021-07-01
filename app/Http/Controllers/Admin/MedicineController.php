@@ -17,6 +17,9 @@ class MedicineController extends Controller
      */
     public function index()
     {
+          //permissions
+          typePage("manger");
+
         $medicines = Medicine::paginate(PAGINATION_COUNT);
         return view('Admin.medicines.index', compact('medicines'));
     }
@@ -28,6 +31,9 @@ class MedicineController extends Controller
      */
     public function create()
     {
+          //permissions
+          typePage("manger");
+
         return view('Admin.medicines.create');
 
     }
@@ -59,6 +65,9 @@ class MedicineController extends Controller
 
     public function edit($id)
     {
+          //permissions
+          typePage("manger");
+          
         $medicine =Medicine::find($id);
         return view('Admin.medicines.edit', compact('medicine'));
     }

@@ -16,7 +16,7 @@
 @if (auth('admin')->user()->type_id == 'nurse')
 <div class="content-header row">
     <div class="content-header-left col-md-6 col-12 mb-2">
-      <h3 class="content-header-title">patient_medicines index</h3>
+      <h3 class="content-header-title">Administrations index</h3>
       <div class="row breadcrumbs-top">
         <div class="breadcrumb-wrapper col-12">
           <ol class="breadcrumb">
@@ -91,8 +91,9 @@
   @endif
 
 
+  @if (auth('admin')->user()->type_id == 'manger' || auth('admin')->user()->type_id == 'doctor')
 
-  <div class="content-header row">
+<div class="content-header row">
     <div class="content-header-left col-md-6 col-12 mb-2">
       <h3 class="content-header-title">Administrations index</h3>
       <div class="row breadcrumbs-top">
@@ -149,7 +150,9 @@
       </div>
       {{ $administrations->links() }}
     </div>
-  </div>
+</div>
+@endif
+
 @endsection
 
 
@@ -162,6 +165,6 @@
             $('#datatable').DataTable();
             $('#datatable2').DataTable();
         });
-       
+
     </script>
 @endsection

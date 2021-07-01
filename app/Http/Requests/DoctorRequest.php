@@ -25,8 +25,8 @@ class DoctorRequest extends FormRequest
     public function rules()
     {
         return [
-                "name" => 'required|string|max:100',
-                "email" => 'required|string|email',
+                "name" => 'required|string|max:100|unique:admins,name,'.$this->id,
+                "email" => 'required|string|email|unique:admins,email,'.$this->id,
                 "shift_id" => 'required',
                 "password" => 'nullable|required_without:id',
         ];

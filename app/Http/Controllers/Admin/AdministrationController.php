@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Administration ;
 use App\Models\PatientMedicine;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 
 class AdministrationController extends Controller
@@ -22,12 +23,26 @@ class AdministrationController extends Controller
 
     public function update($id)
     {
-        try {
+      //  try {
             DB::beginTransaction();
+
+            $timeNow = date('Y-m-d H:i:s', strtotime( now()));
+
         //update Time PatientMedicine;
         $patient_medicines = PatientMedicine::find($id);
+
+        $date = $patient_medicines->updated_at;
+        $carbon_date = Carbon::parse($date);
+        $carbon_date->addHours($patient_medicines->hourTime );
+
+        //return $date;
+
+         //   return $timeNow < $carbon_date ;
+        if($timeNow < $carbon_date ){
+            return redirect()->route('administrations.index')->with(['error' =>  'لم ياتى معاد الجرعه حتى الان']);
+        }
+
         $patient_medicines->updated_at =now();
-        $patient_medicines->doseAmount -=1;
         $patient_medicines->save();
         //End update Time PatientMedicine
 
@@ -44,10 +59,10 @@ class AdministrationController extends Controller
         //End Logs
         DB::commit();
         return redirect()->route('administrations.index')->with(['success' => 'تم ألاضافة بنجاح']);
-        } catch (\Exception $ex) {
-            DB::rollback();
-            return redirect()->route('administrations.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
-        }
+        // } catch (\Exception $ex) {
+        //     DB::rollback();
+        //     return redirect()->route('administrations.index')->with(['error' => 'حدث خطا ما برجاء المحاوله لاحقا']);
+        // }
 
 
     }

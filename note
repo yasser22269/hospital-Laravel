@@ -15,4 +15,10 @@
 - permissions                             ---done
 - Surgeries(العمليات الجراحية)           ---done
 
-
+Email Doctor and nurse                    ---done
+Name patient                              ---done
+patient_medicines Edit                    ---done
+patient_medicines medicines               ---done
+surgeries  patient                        ---done
+patient_medicines nurse update now        ---done
+clock                                     ---done
