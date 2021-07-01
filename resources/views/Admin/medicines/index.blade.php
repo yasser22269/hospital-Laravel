@@ -6,7 +6,9 @@
     .table th, .table td {
         padding: 0.75rem 1rem;
     }
+
 </style>
+<link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.css">
 @endsection
 @section('content')
 <div class="content-header row">
@@ -41,7 +43,7 @@
 
         <div class="card-content collapse show">
           <div class="table-responsive">
-            <table class="table display nowrap table-striped table-bordered scroll-horizontal">
+            <table id="datatable" class="table display nowrap table-striped table-bordered scroll-horizontal">
               <thead class="bg-success white">
                 <tr>
                   <th> id</th>
@@ -91,3 +93,11 @@
 @endsection
 
 
+@section('js')
+    <script type="text/javascript" charset="utf8" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.js"></script>
+    <script>
+        $(document).ready( function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+@endsection

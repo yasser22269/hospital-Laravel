@@ -65,6 +65,12 @@
           </li>
 
 
+          <li class=" navigation-header">
+            <span data-i18n="nav.Surgeries.pages">Surgeries</span><i class="la la-ellipsis-h ft-minus" data-toggle="tooltip" data-placement="right" data-original-title="Pages"></i>
+          </li>
+          <li class="nav-item  {{ Request::is('Admin/Surgeries*') ? 'active' : '' }}"><a href="{{ route('Surgeries.index') }}"><i class="la la-check-square"></i><span class="menu-title" >Surgeries</span><span class="badge badge badge-info float-right"> {{ App\Models\Surgery::count() }} </span></a>
+          </li>
+
           @endif
 
 

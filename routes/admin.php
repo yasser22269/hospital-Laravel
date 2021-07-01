@@ -50,7 +50,14 @@ Route::group(['namespace' => 'Admin', 'middleware' => 'auth:admin', 'prefix' => 
 
         // ------------------------------Start administrations---------------------------------
 
-        Route::resource('administrations', 'AdministrationController')->only('index','update');;
+        Route::resource('administrations', 'AdministrationController')->only('index','update');
+
+    // ------------------------------End administrations------------------------------------
+
+
+    // ------------------------------Start administrations---------------------------------
+
+    Route::resource('Surgeries', 'SurgeryController');
 
     // ------------------------------End administrations------------------------------------
 
