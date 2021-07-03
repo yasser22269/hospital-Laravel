@@ -3,7 +3,7 @@
 - profile                                 ---done
 - shift                                   ---done
 - type                                    ---done
-- woed                                    ---done
+- word                                    ---done
 - room                                    ---done
 - bed                                     ---done
 - patient                                 ---done
